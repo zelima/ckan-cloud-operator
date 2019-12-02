@@ -9,7 +9,8 @@ if [ "${1}" == "install" ]; then
 
 elif [ "${1}" == "initialize" ]; then
     ckan-cloud-operator cluster initialize --interactive --cluster-provider=minikube <<< "
-    k
+
+    t
     localhost
     none
     y
