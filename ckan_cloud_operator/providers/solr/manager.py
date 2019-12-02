@@ -2,6 +2,7 @@ import subprocess
 import json
 import os
 import glob
+import time
 
 from ckan_cloud_operator.config import manager as config_manager
 from ckan_cloud_operator.infra import CkanInfra
@@ -140,7 +141,15 @@ def zk_set_url_scheme(scheme='http'):
     kubectl.check_output('exec %s zkCli.sh set /clusterprops.json \'{"urlScheme":"%s"}\'' % (pod_name, scheme))
 
 
-def zk_list_configs():
+def zk_list_configs(attemp=0):
+    if attemp==5:
+        return []
+    else:
+        if not len(kubectl.get('pods', '-l', 'app=provider-solr-solrcloud-zk', required=True)['items']):
+            print('ZooKeeper Pod is not created, waiting for 30 sec...')
+            print(kubectl.get('pods', '-l', 'app=provider-solr-solrcloud-zk', required=True)['items'])
+            time.sleep(30)
+            return zk_list_configs(attemp+1)
     pod_name = kubectl.get('pods', '-l', 'app=provider-solr-solrcloud-zk', required=True)['items'][0]['metadata']['name']
     lines = list(kubectl.check_output(f'exec {pod_name} zkCli.sh ls /configs').decode().splitlines())[5:]
     if len(lines) == 1:
