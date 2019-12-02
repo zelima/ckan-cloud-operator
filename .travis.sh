@@ -7,6 +7,16 @@ if [ "${1}" == "install" ]; then
     ! docker pull viderum/ckan-cloud-operator:jnlp-latest && echo Failed to pull jnlp image && exit 1
     echo Great Success! && exit 0
 
+elif [ "${1}" == "initialize" ]; then
+    ckan-cloud-operator cluster initialize --interactive --cluster-provider=minikube <<< "
+    k
+    localhost
+    none
+    y
+    y
+    y
+    "
+
 elif [ "${1}" == "install-tools" ]; then
     if [ "${K8_PROVIDER}" == "minikube" ]; then
       # Install Minikube
