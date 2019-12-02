@@ -20,7 +20,7 @@ jobs:
       befroe_install: pip install -e .
       install: bash .travis.sh install-tools
       before_script: sudo minikube start --kubernetes-version "${K8_VERSION}" --vm-driver=none
-      script: echo -ne "\nm localhost none y y y" | ckan-cloud-operator cluster initialize --interactive --cluster-provider=minikube | ckan-cloud-operator cluster initialize --interactive --cluster-provider=minikube
+      script: echo -ne "y m localhost none y y y" | ckan-cloud-operator cluster initialize --interactive --cluster-provider=minikube | ckan-cloud-operator cluster initialize --interactive --cluster-provider=minikube
 
 # install:
 # - curl -L https://raw.githubusercontent.com/OriHoch/travis-ci-operator/master/travis_ci_operator.sh > $HOME/bin/travis_ci_operator.sh
