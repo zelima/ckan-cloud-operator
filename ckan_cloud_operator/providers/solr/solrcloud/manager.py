@@ -22,6 +22,7 @@ import subprocess
 import yaml
 import json
 import time
+import os
 
 from ckan_cloud_operator import kubectl
 from ckan_cloud_operator import logs
