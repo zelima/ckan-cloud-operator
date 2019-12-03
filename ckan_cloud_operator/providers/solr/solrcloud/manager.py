@@ -61,6 +61,8 @@ def solr_curl(path, required=False, debug=False):
         kubectl.check_call(f'exec deployment-pod::{deployment_name} -- curl \'localhost:8983/solr{path}\'',
                            use_first_pod=True)
     else:
+        print('----------------------------------')
+        print(deployment_name)
         exitcode, output = kubectl.getstatusoutput(f'exec deployment-pod::{deployment_name} -- curl -s -f \'localhost:8983/solr{path}\'',
                                                    use_first_pod=True)
         if exitcode == 0:
