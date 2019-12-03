@@ -287,9 +287,9 @@ def _init_solr(instance_id, dry_run=False):
     solr_status = solr_manager.get_collection_status(instance_id)
     logs.debug_yaml_dump(solr_status)
     if not solr_status['ready']:
-        logs.info('Creating solr collection', collection_name=instance_id, solr_config='ckan_default')
+        logs.info('Creating solr collection', collection_name=instance_id, solr_config='ckan_28_default')
         if not dry_run:
-            solr_manager.create_collection(instance_id, 'ckan_default')
+            solr_manager.create_collection(instance_id, 'ckan_28_default')
     else:
         logs.info(f'collection already exists ({instance_id})')
     solr_url = solr_status['solr_http_endpoint']
