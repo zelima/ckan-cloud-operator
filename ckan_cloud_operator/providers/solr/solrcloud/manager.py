@@ -89,7 +89,7 @@ def initialize(interactive=False, dry_run=False):
     _config_set('sc-main-host-name', solrcloud_host_name)
     logs.info(f'Initialized solrcloud service: {solrcloud_host_name}')
 
-    # TODO - need to check the pod names and ensure these are solrcloud ones 
+    # TODO - need to check the pod names and ensure these are solrcloud ones
     # TODO - actual number is _+ 1_ and not _+ 2_
     expected_running = len(sc_host_names) + len(zk_host_names) + 2
     while True:
@@ -99,8 +99,9 @@ def initialize(interactive=False, dry_run=False):
         if running == expected_running:
             break
         logs.info('Waiting for SolrCloud to start... %d/%d' % (running, expected_running))
+        logs.info(pods)
         time.sleep(30)
-    
+
     _set_provider()
 
 
@@ -299,7 +300,7 @@ def _apply_zoonavigator_deployment(dry_run=False):
             'revisionHistoryLimit': 2,
             'selector': {
                 'matchLabels': _get_resource_labels(for_deployment=True, suffix=suffix),
-            },                
+            },
             'template': {
                 'metadata': {
                     'labels': _get_resource_labels(for_deployment=True, suffix=suffix),
@@ -349,7 +350,7 @@ def _apply_solrcloud_deployment(suffix, volume_spec, configmap_name, log_configm
             'strategy': {'type': 'Recreate', },
             'selector': {
                 'matchLabels': _get_resource_labels(for_deployment=True, suffix='sc'),
-            },                
+            },
             'template': {
                 'metadata': {
                     'labels': _get_resource_labels(for_deployment=True, suffix='sc'),
