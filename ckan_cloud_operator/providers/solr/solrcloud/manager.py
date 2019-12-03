@@ -340,7 +340,10 @@ def _apply_solrcloud_deployment(suffix, volume_spec, configmap_name, log_configm
     namespace = cluster_manager.get_operator_namespace_name()
     container_spec_overrides = config_manager.get('container-spec-overrides', configmap_name='ckan-cloud-provider-solr-solrcloud-sc-config',
                                                   required=False, default=None)
-    resources = {'requests': {'cpu': '1', 'memory': '4Gi'}, 'limits': {'cpu': '2.5', 'memory': '8Gi'}} if not container_spec_overrides else {}
+    cpu, memory = '1', '4Gi'
+    if os.environ.get('CCO_INTERACTIVE_CI_FPATH'):
+        cpu, memory = '0.2', '1Gi'
+    resources = {'requests': {'cpu': cpu, 'memory': memory}, 'limits': {'cpu': '2.5', 'memory': '8Gi'}} if not container_spec_overrides else {}
     kubectl.apply(kubectl.get_deployment(
         _get_resource_name(suffix),
         _get_resource_labels(for_deployment=True, suffix='sc'),
