@@ -20,7 +20,6 @@ setup(
     license='MIT',
     packages=find_packages(exclude=['examples', 'tests', '.tox']),
     install_requires=[
-        'pyyaml',
         'httpagentparser',
         'boto3',
         'coverage',
