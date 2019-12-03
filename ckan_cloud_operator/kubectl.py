@@ -33,6 +33,7 @@ def call(cmd, namespace='ckan-cloud'):
 
 def getstatusoutput(cmd, namespace='ckan-cloud', use_first_pod=False):
     cmd = _parse_call_cmd(cmd, namespace, use_first_pod)
+    print(f'kubectl -n {namespace} {cmd}')
     return subprocess.getstatusoutput(f'kubectl -n {namespace} {cmd}')
 
 
