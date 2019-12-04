@@ -343,11 +343,11 @@ def _wait_instance_events(instance_id, force_update_events=False):
         logs.debug('sleeping 60 seconds')
         time.sleep(60)
         print(kubectl.check_output('get pods', namespace=instance_id))
-        print(kubectl.check_output('describe pods', namespace=instance_id))
+        print(_check_instance_events(instance_id, force_update_events))
         if len(_check_instance_events(instance_id, force_update_events)) == 0:
             logs.info('All instance events completed successfully')
             break
-        if (datetime.datetime.now() - start_time).total_seconds() > 600:
+        if (datetime.datetime.now() - start_time).total_seconds() > 1200:
             raise Exception('time out waiting for instance events')
 
 
