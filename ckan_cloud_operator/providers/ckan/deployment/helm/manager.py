@@ -343,7 +343,7 @@ def _wait_instance_events(instance_id, force_update_events=False):
         logs.debug('sleeping 60 seconds')
         time.sleep(60)
         events = _check_instance_events(instance_id, force_update_events)
-        logs.info(events)
+        print(events)
         if len(events) == 0:
             logs.info('All instance events completed successfully')
             break
