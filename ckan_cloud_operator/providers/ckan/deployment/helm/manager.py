@@ -340,9 +340,11 @@ def _wait_instance_events(instance_id, force_update_events=False):
     start_time = datetime.datetime.now()
     logs.info('Waiting for instance events', start_time=start_time)
     while True:
-        logs.debug('sleeping 15 seconds')
-        time.sleep(15)
-        if len(_check_instance_events(instance_id, force_update_events)) == 0:
+        logs.debug('sleeping 60 seconds')
+        time.sleep(60)
+        events = _check_instance_events(instance_id, force_update_events)
+        logs.info(events)
+        if len(events) == 0:
             logs.info('All instance events completed successfully')
             break
         if (datetime.datetime.now() - start_time).total_seconds() > 600:
