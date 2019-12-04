@@ -342,9 +342,9 @@ def _wait_instance_events(instance_id, force_update_events=False):
     while True:
         logs.debug('sleeping 60 seconds')
         time.sleep(60)
-        events = _check_instance_events(instance_id, force_update_events)
-        print(events)
-        if len(events) == 0:
+        print(kubectl.check_output('get pods', namespace=instance_id))
+        print(kubectl.check_output('describe pods', namespace=instance_id))
+        if len(_check_instance_events(instance_id, force_update_events)) == 0:
             logs.info('All instance events completed successfully')
             break
         if (datetime.datetime.now() - start_time).total_seconds() > 600:
