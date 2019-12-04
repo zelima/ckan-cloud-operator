@@ -32,6 +32,8 @@ from ckan_cloud_operator.providers.cluster import manager as cluster_manager
 from .constants import LOG4J_PROPERTIES, SOLR_CONFIG_XML
 
 
+TEST_CPU, TEST_MEMORY = '0.2', '0.4Gi'
+
 def start_zoonavigator_port_forward():
     connection_string = ','.join(yaml.load(_config_get('zk-host-names')))
     print("\nStarting port forward to zoonavigator\n"
@@ -228,6 +230,10 @@ def _get_volume_pod_scheduling(volume_spec, app_in):
 
 
 def _apply_zookeeper_deployment(suffix, volume_spec, zookeeper_configmap_name, headless_service_name, dry_run=False):
+    cpu, memory = '0.5', '1Gi'
+    if os.environ.get('CCO_INTERACTIVE_CI_FPATH'):
+        cpu, memory = TEST_CPU, TEST_MEMORY
+
     kubectl.apply(kubectl.get_deployment(
         _get_resource_name(suffix),
         _get_resource_labels(for_deployment=True, suffix='zk'),
@@ -274,7 +280,7 @@ def _apply_zookeeper_deployment(suffix, volume_spec, zookeeper_configmap_name, h
                                 'failureThreshold': 3, 'initialDelaySeconds': 15, 'periodSeconds': 10,
                                 'successThreshold': 1, 'timeoutSeconds': 5
                             },
-                            'resources': {'requests': {'cpu': '0.5', 'memory': '1Gi'}, 'limits': {'memory': '2Gi'}},
+                            'resources': {'requests': {'cpu': cpu, 'memory': memory}, 'limits': {'memory': '2Gi'}},
                             'volumeMounts': [
                                 {'mountPath': '/var/lib/zookeeper', 'name': 'datadir'},
                             ],
@@ -343,7 +349,7 @@ def _apply_solrcloud_deployment(suffix, volume_spec, configmap_name, log_configm
                                                   required=False, default=None)
     cpu, memory = '1', '4Gi'
     if os.environ.get('CCO_INTERACTIVE_CI_FPATH'):
-        cpu, memory = '0.2', '1Gi'
+        cpu, memory = TEST_CPU, TEST_MEMORY
     resources = {'requests': {'cpu': cpu, 'memory': memory}, 'limits': {'cpu': '2.5', 'memory': '8Gi'}} if not container_spec_overrides else {}
     kubectl.apply(kubectl.get_deployment(
         _get_resource_name(suffix),

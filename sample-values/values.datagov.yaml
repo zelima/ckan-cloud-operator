@@ -16,25 +16,25 @@ ckanGunicornWorkers: 2
 ckanHelmChartVersion: v0.0.11-rc12
 
 ckanImage: viderum/ckan-cloud-docker:ckan-e4716b4194d3f7be8497940cacb0debf42a744b9-datagov-theme
-ckanJobsDbResources: '{"requests": {"cpu": "20m", "memory": "50Mi"}, "limits": {"memory":
+ckanJobsDbResources: '{"requests": {"cpu": "20m", "memory": "100Mi"}, "limits": {"memory":
   "200Mi"}}'
 ckanJobsDbTerminationGracePeriodSeconds: 30
-ckanJobsResources: '{"requests": {"cpu": "150m", "memory": "600Mi"}, "limits": {"memory":
+ckanJobsResources: '{"requests": {"cpu": "150m", "memory": "100Mi"}, "limits": {"memory":
   "1500Mi"}}'
 ckanJobsTerminationGracePeriodSeconds: 30
 ckanLivenessPeriodSeconds: 300
 ckanPlugins: stats text_view image_view recline_view datastore xloader logstash
   datajson archiver report dcat dcat_json_interface structured_data geodatagov geodatagov_miscs
   spatial_metadata spatial_query usmetadata
-ckanResources: '{"requests": {"cpu": "400m", "memory": "1200Mi"}, "limits": {"memory":
+ckanResources: '{"requests": {"cpu": "400m", "memory": "100Mi"}, "limits": {"memory":
   "2Gi"}}'
 ckanStorageClassName: cca-ckan
 dataStoreDbPersistentDiskSizeGB: 20
-datastoreDbResources: '{"requests": {"cpu": "100m", "memory": "300Mi"}, "limits":
+datastoreDbResources: '{"requests": {"cpu": "100m", "memory": "100Mi"}, "limits":
   {"memory": "600Mi"}}'
 datastoreDbTerminationGracePeriodSeconds: 30
 dbPersistentDiskSizeGB: 20
-dbResources: '{"requests": {"cpu": "100m", "memory": "300Mi"}, "limits": {"memory":
+dbResources: '{"requests": {"cpu": "100m", "memory": "100Mi"}, "limits": {"memory":
   "600Mi"}}'
 dbTerminationGracePeriodSeconds: 30
 displayTimezone: America/New_York
@@ -62,7 +62,7 @@ jobsDbPersistentDiskSizeGB: 5
 kind: datapusher
 name: ckan-cloud-ckaninstance-logging-test-5da8256e
 nginxReplicas: 2
-nginxResources: '{"requests": {"cpu": "60m", "memory": "300Mi"}, "limits": {"memory":
+nginxResources: '{"requests": {"cpu": "60m", "memory": "100Mi"}, "limits": {"memory":
   "800Mi"}}'
 provisioningKindTitle: DataPusher / Catalog
 ready: true
@@ -75,11 +75,10 @@ siteLogo: /base/images/ckan-logo.png
 siteTitle: Logging Test
 siteUrl: https://ckan-cloud-logging-test-5da8256e.datagov.us
 solrPersistentDiskSizeGB: 10
-solrResources: '{"requests": {"cpu": "60m", "memory": "600Mi"}, "limits": {"memory":
+solrResources: '{"requests": {"cpu": "60m", "memory": "100Mi"}, "limits": {"memory":
   "1Gi"}}'
 storageClassName: cca-storage
 terminationGracePeriodSeconds: 30
 useCentralizedInfra: true
 usePersistentVolumes: true
 withSansSSL: true
-
